@@ -1,0 +1,23 @@
+{% extends "_layout" %}
+
+{% set profilePhoto = entry.profilePhoto.one() %}
+{% set bio = entry.bio %}
+
+{% block content %}
+
+    {% if profilePhoto %}
+
+    <div class="photo">
+        {{profilePhoto.getImg()}}
+    </div>
+
+    {% endif %}
+
+    {% if bio %}
+    <div class="bio">
+        {{ bio|camel|md }}
+    </div>
+
+    {% endif %}
+
+{% endblock %}

@@ -1,0 +1,67 @@
+{# You can omit the `.twig` when referencing another template: #}
+{% extends '_layout' %}
+
+{% set featureImage = entry.featureImage.one() %}
+{% set topics = entry.topics.all() %}
+{% set postContent = entry.postContent.all() %}
+
+
+{# Provide something to the `content` block in `_layout.twig`: #}
+{% block content %}
+
+  <h1>{{ entry.title }}</h1>
+
+  <time datetime="{{ entry.postDate | atom }}">
+    {{ entry.postDate | date }}
+  </time>
+
+  {% if topics | length %}
+  <ul class="topics">
+    {% for topic in topics %}
+        <li>{{ topic.getLink() }}</li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+
+
+    {% if featureImage %}
+    <div class="featureImage">
+        {{ featureImage.getImg() }}
+    </div>
+    {% endif %}
+
+    <div class="postContent">
+    {% for contentBlock in postContent %}
+        {% set blockType = contentBlock.type.handle %}
+
+        {% if blockType == 'text' %}
+            <div class="content-block text">
+                {{contentBlock.text }}
+            </div>
+        {% elseif blockType == 'image' %}
+            {% set image = contentBlock.image.one() %}
+
+            <div class="content-block image">
+                {{ image.getImg() }}
+            </div>
+        {% elseif blockType == 'quote' %}
+            <div class="content-block quote">
+                <blockquote>{{ contentBlock.quote }}</blockquote>
+            </div>
+        {% else %}
+            <div class="content-block unsupported">
+                <p>
+                    Unsupported block type: <code> {{blockType}}</code>
+                </p>
+            </div>
+        {% endif %}
+    {% else %}
+        <div class="content-block empty">
+            <p>This post has no contents!</p>
+        </div>
+    {% endfor %}
+    </div>
+
+
+
+{% endblock %}
