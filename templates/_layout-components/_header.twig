@@ -1,13 +1,16 @@
-    <header>
-      <a class="home" href="{{ siteUrl }}">{{ siteName }}</a>
-      <nav>
-      <ul>
-        <li>
-          <a href="{{ url('blog') }}">Blog</a>
-        </li>
-        <li>
-          <a href="{{ url('about') }}">About</a>
-        </li>
-      </ul>
-    </nav>
-    </header>
+
+{% set navSeg = craft.app.request.getSegment(1) %}
+
+<header>
+  <a class="home" href="{{ siteUrl }}">{{ siteName }}</a>
+  <nav>
+  <ul>
+    <li>
+      <a href="{{ url('blog') }}" class="{{ navSeg == 'blog' ? 'active' : 'inactive' }}">Blog</a>
+    </li>
+    <li>
+      <a href="{{ url('about') }}" class="{{ navSeg == 'about' ? 'active' : 'inactive' }}">About</a>
+    </li>
+  </ul>
+</nav>
+</header>
