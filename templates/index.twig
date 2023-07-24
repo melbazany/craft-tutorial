@@ -2,15 +2,27 @@
 
 {% extends "_layout" %}
 
+{% set description = entry.description %}
+{% set gif = entry.gifEmbed %}
+
 {% block content %}
 
 {# Here’s some text, dynamically inserted into an HTML tag: #}
 <h1>{{ siteName }}</h1>
 
-{# What about a dynamic value? #}
-<p>Today is {{ now | time }}!</p>
+{% if description and gif %}
+  {{ gif|md }}
+  {{ description|attr({
+    style: {
+      'font-size': '1.3rem',
+      'font-weight': '500',
+      'color': '#a54fa5',
+      'text-decoration': 'underline',
+    }
+  }) }}
+{% endif %}
 
-<p>Today is {{ now | date }}</p>
+<p style="font-size: 0.9rem; font-weight: 200;">It's {{ now|datetime(timezone='EST') }}</p>
 
 {# This is a variable, and it’s being set to a list (or “array”) of colors: #}
 {% set colors = ['red', 'green', 'blue'] %}
