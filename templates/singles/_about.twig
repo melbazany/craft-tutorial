@@ -8,14 +8,20 @@
     {% if profilePhoto %}
 
     <div class="photo">
-        {{profilePhoto.getImg()}}
+        {{
+            profilePhoto.getImg({
+                mode: 'crop',
+                width: 360,
+                height: 360,
+            })
+        }}
     </div>
 
     {% endif %}
 
     {% if bio %}
     <div class="bio">
-        {{ bio|camel|md }}
+        {{ bio }}
     </div>
 
     {% endif %}
